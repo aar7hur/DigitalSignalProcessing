@@ -5,6 +5,25 @@ from numpy import arange, int16, zeros, nonzero
 from typing import Tuple, List
 
 
+def plot(eixo_x: list, eixo_y: list) -> None:
+  """
+  Função que recebe duas listas e faz o plot do grafico.
+
+  Args:
+    eixo_x (list): array com os pontos do eixo x
+    eixo_y (list): array com os pontos do eixo y
+  
+  Returns:
+    None
+  """
+  pyplot.figure(figsize=(12,12))
+  pyplot.stem(eixo_x,eixo_y, use_line_collection=True)
+  pyplot.xlabel('N')
+  pyplot.ylabel('x[N]')
+  pyplot.title('Gráfico da sequencia discreta')
+  pyplot.show()
+
+
 def impseq(n0: int, n1: int, n2: int) -> Tuple[List, List]:
     """ 
     Gera x(n) = delta(n-n0); n1 <= n <= n2
@@ -182,3 +201,68 @@ def sigfold(eixo_y: list, eixo_x: list) -> Tuple[List, List]:
     eixo_y = eixo_y[::-1]
 
     return eixo_y, eixo_x
+
+if __name__ == '__main__':
+    
+    import numpy as np
+    
+    ##################### impseq #######################
+    # x[n] = δ[n + 8] − 20 ≤ n ≤ +20
+    valor_min = -20
+    valor_max = 20
+    n = -8
+
+    eixo_x1c, eixo_y1c = impseq(n, valor_min, valor_max)
+    
+    #################### stepseq ######################
+    # x[n] = u[n] − 20 ≤ n ≤ +20
+    valor_min = -20
+    valor_max = 20
+    n = 0
+
+    eixo_x2a, eixo_y2a = stepseq(n, valor_min, valor_max)
+    plot(eixo_x2a, eixo_y2a)
+    
+    ################### sigadd #########################
+    # x[n] = x1[n] + x2[n]
+    n1 = np.linspace(-3, 7, num=11, dtype=int)
+    y1 = np.array([3, 0, 2, 1, 5, 7, 0, 0, 1, 1, 10])
+
+    n2 = np.linspace(0, 8, num=9, dtype=int)
+    y2 = np.linspace(-4, 4, num=9, dtype=int)
+
+
+    eixo_y, eixo_x = sigadd(y1, n1, y2, n2)
+    plot(eixo_x, eixo_y)
+    
+    ################$ sigmult ###########################
+    # x[n] = x1[n]*x2[n]
+    n1 = np.linspace(-3, 7, num=11, dtype=int)
+    y1 = np.array([3, 0, 2, 1, 5, 7, 0, 0, 1, 1, 10])
+
+    n2 = np.linspace(0, 8, num=9, dtype=int)
+    y2 = np.linspace(-4, 4, num=9, dtype=int)
+
+
+    eixo_y, eixo_x = sigmult(y1, n1, y2, n2)
+    plot(eixo_x, eixo_y)
+    
+    ################ sigshift #########################
+    # a) y[n] = x[n − 4]
+    eixo_x5a = np.linspace(-3, 7, num=11, dtype=int)
+    eixo_y5a = np.array([3, 0, 2, 1, 5, 7, 0, 0, 1, 1, 10])
+    deslocamentoa= 4
+
+    eixo_y5a, eixo_x5a = sigshift(eixo_y5a, eixo_x5a, deslocamentoa)
+    plot(eixo_x5a, eixo_y5a)
+
+    plot(eixo_x1c, eixo_y1c)
+    
+    #####################s sigfold #####################
+    eixo_x6 = np.linspace(-3, 7, num=11, dtype=int)
+    eixo_y6 = np.array([3, 0, 2, 1, 5, 7, 0, 0, 1, 1, 10])
+
+    eixo_y6, eixo_x6 = sigfold(eixo_y6, eixo_x6)
+    plot(eixo_x6, eixo_y6)
+
+    
