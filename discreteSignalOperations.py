@@ -3,6 +3,7 @@ Declaração de funçoes usadas em todos os exercicios.
 """
 from numpy import arange, int16, zeros, nonzero
 from typing import Tuple, List
+from matplotlib import pyplot
 
 
 def plot(eixo_x: list, eixo_y: list) -> None:
